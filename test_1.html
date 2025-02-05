@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- <link rel="stylesheet" href="../../assets/css/adminhome.css"> -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f1f1f1;
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background: #2e2e2e;
+            color: #fff;
+            padding: 30px 20px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h2 {
+            text-align: center;
+            color: #fff;
+            font-size: 24px;
+            font-weight: 600;
+            margin-bottom: 40px;
+            letter-spacing: 2px;
+        }
+
+        .sidebar ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .sidebar ul li {
+            margin: 20px 0;
+        }
+
+        .sidebar ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            border-radius: 10px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .sidebar ul li a:hover {
+            background-color: #1a1a1a;
+            transform: translateX(15px);
+        }
+
+        .sidebar ul li a i {
+            margin-right: 15px;
+        }
+
+        /* Navbar */
+        .navbar {
+            flex-grow: 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background: #fff;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            margin-left: 280px;
+            /* Adjust to give space for sidebar */
+            position: sticky;
+            top: 0;
+            z-index: 999;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            font-size: 16px;
+        }
+
+        .profile img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+
+        .profile-info {
+            color: #333;
+            margin-right: 20px;
+        }
+
+        .profile-info span {
+            display: block;
+        }
+
+        .content {
+            flex-grow: 1;
+            margin-left: 280px;
+            /* Adjust to give space for sidebar */
+            padding: 40px;
+            overflow: hidden;
+            display: none;
+            /* Hide all content sections initially */
+        }
+
+        .content.active {
+            display: block;
+            /* Only show the active section */
+        }
+
+        .card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+            /* transition: all 0.3s ease; */
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        .card-header {
+            background-color: #007bff;
+            color: #fff;
+            padding: 20px;
+            font-size: 20px;
+            font-weight: bold;
+
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card-body {
+            padding: 30px;
+            font-size: 16px;
+            color: #666;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            background: #f4f7fa;
+            width: 100%;
+            position: relative;
+            bottom: 0;
+            font-size: 14px;
+            color: #888;
+        }
+
+        /* Dropdown Menu */
+        .dropdown {
+            display: none;
+            margin-left: 20px;
+        }
+
+        .dropdown a {
+            font-size: 14px;
+            padding-left: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .dropdown a:hover {
+            transform: translateX(10px);
+        }
+
+        .dropdown.active {
+            display: block;
+        }
+
+        /* Mobile Responsive Design */
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                position: static;
+                transform: translateX(-100%);
+            }
+
+            .sidebar.active {
+                transform: translateX(0);
+            }
+
+            .navbar {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-left: 0;
+            }
+
+            .content {
+                margin-left: 0;
+            }
+
+            /* fidsifisdgfisdgif */
+            table {
+                width: 100%;
+                border-collapse: collapse;
+                text-align: left;
+            }
+
+            th,
+            td {
+                padding: 12px;
+                border: 1px solid #ddd;
+                text-align: center;
+            }
+
+            .actions button {
+                padding: 6px 12px;
+                margin: 2px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+            }
+
+            .btn-edit {
+                background-color: green;
+                color: white;
+            }
+
+            .btn-delete {
+                background-color: red;
+                color: white;
+            }
+
+            .btn-edit:hover {
+                background-color: darkgreen;
+            }
+
+            .btn-delete:hover {
+                background-color: darkred;
+            }
+
+            .actions button:focus {
+                outline: none;
+            }
+            /* Layout for dashboard stats */
+        }
+
+        .dashboard-stats {
+                display: grid;
+                grid-template-columns: repeat(3, 1fr);
+                gap: 20px;
+                margin-bottom: 20px;
+            }
+
+            .stat-card {
+                background-color: #f9f9f9;
+                border: 2px solid #ccc;
+                /* Adding a visible border */
+                border-radius: 8px;
+                padding: 20px;
+                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+                text-align: center;
+                transition: transform 0.3s ease;
+            }
+
+            .stat-card:hover {
+                transform: scale(1.05);
+            }
+
+            .stat-card h3 {
+                font-size: 18px;
+                color: #333;
+                margin-bottom: 10px;
+                font-weight: 600;
+            }
+
+            .stat-card p {
+                font-size: 24px;
+                font-weight: bold;
+                color: #007bff;
+                margin: 0;
+            }
+
+            @media (max-width: 1024px) {
+                .dashboard-stats {
+                    grid-template-columns: repeat(2, 1fr);
+                    /* Adjust for medium screens */
+                }
+            }
+
+            @media (max-width: 768px) {
+                .dashboard-stats {
+                    grid-template-columns: 1fr;
+                    /* Stack vertically for smaller screens */
+                }
+            }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>Admin Panel</h2>
+        <ul>
+            <li><a href="#" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="#" onclick="showSection('managepost')"><i class="fas fa-edit"></i> Manage Posts</a></li>
+            <li><a href="#" onclick="showSection('managerepost')"><i class="fas fa-retweet"></i> Manage Reposts</a></li>
+            <li><a href="#" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
+            <li>
+                <a href="#" onclick="toggleDropdown()"><i class="fas fa-cogs"></i> Settings</a>
+                <div class="dropdown">
+                    <a href="?page=general_setting" onclick="showSection('settings')">General Settings</a>
+                    <a href="?page=account_setting" onclick="showSection('account')">Account Settings</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+
+    <div class="navbar">
+        <div class="profile">
+            <img src="../assets/images/defaultpic.jpg" alt="Profile Picture">
+            <div class="profile-info">
+                <span>
+                    <!-- <?php
+                        // echo $admin_name;
+                        htmlspecialchars($admin_name);
+                        ?> -->
+                </span>
+                <span>
+                    <!-- <?php
+                        // echo $admin_email;
+                        htmlspecialchars($admin_email);
+                        ?> -->
+                </span>
+            </div>
+        </div>
+        <a href="../../index1.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+
+    </div>
+    <div class="content" id="home">
+        <div class="card">
+            <div class="card-header">Welcome to the Admin Dashboard</div>
+            <div class="card-body">
+                <p>Here, you can manage users, posts, and see activity reports. Use the sidebar to navigate.</p>
+
+                <!-- Dashboard Stats -->
+                <div class="dashboard-stats">
+                    <div class="stat-card">
+                        <h3>Users Quantity</h3>
+                        <p id="user-qty">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Posts Quantity</h3>
+                        <p id="post-qty">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Reposts Quantity</h3>
+                        <p id="repost-qty">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Logged In Users</h3>
+                        <p id="logged-in-users">Loading...</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Logged Out Users</h3>
+                        <p id="logged-out-users">Loading...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="content" id="users">
+        <div class="card">
+            <div class="card-header">User Management</div>
+            <div class="card-body">
+                <p>Manage users, view details, and perform actions such as deactivating or deleting users.</p>
+                <!-- Search Bar (Optional) -->
+                <input type="text" class="search-bar" placeholder="Search by Name or Email" onkeyup="searchUser()"
+                    style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
+
+                <!-- User Table -->
+                <table id="users-table" border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
+                    <thead>
+                        <tr>
+                            <th>User ID</th>
+                            <th>Name</th>
+                            <th>Email</th>
+                            <th>Role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>John Doe</td>
+                            <td>johndoe@example.com</td>
+                            <td>Admin</td>
+                            <td>
+                                <button class="btn-edit"
+                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                                <button class="btn-delete"
+                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Jane Smith</td>
+                            <td>janesmith@example.com</td>
+                            <td>User</td>
+                            <td>
+                                <button class="btn-edit"
+                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                                <button class="btn-delete"
+                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>David Brown</td>
+                            <td>davidbrown@example.com</td>
+                            <td>User</td>
+                            <td>
+                                <button class="btn-edit"
+                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
+                                <button class="btn-delete"
+                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
+                                    onclick="return confirm('Are you sure?')">Delete</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="managepost">
+        <div class="card">
+            <div class="card-header">Manage Posts</div>
+            <div class="card-body">
+                <p>Manage user posts, approve or delete content as needed.</p>
+            </div>
+        </div>
+        <!-- <?php include 'manage_posts.php'; ?> -->
+    </div>
+
+    <div class="content" id="managerepost">
+        <div class="card">
+            <div class="card-header">Manage Reposts</div>
+            <div class="card-body">
+                <p>Handle reposts and platform activities effectively.</p>
+            </div>
+        </div>
+        <!-- <?php include 'manage_reposts.php'; ?> -->
+    </div>
+
+    <div class="content" id="reports">
+        <div class="card">
+            <div class="card-header">Reports</div>
+            <div class="card-body">
+                <p>View detailed reports on platform activity and performance.</p>
+            </div>
+        </div>
+        <!-- <?php include 'manage_reports.php'; ?> -->
+    </div>
+
+    <div class="content" id="settings">
+        <div class="card">
+            <div class="card-header">Settings</div>
+            <div class="card-body">
+                <p>Configure platform settings and preferences for users and content.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="account">
+        <div class="card">
+            <div class="card-header">Account Settings</div>
+            <div class="card-body">
+                <p>Update your account details and preferences here.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="content" id="logout">
+        <div class="card">
+            <div class="card-header">Logout</div>
+            <div class="card-body">
+                <p>You have been logged out successfully. <a href="#">Log in again</a>.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>© 2025 Admin Panel. All rights reserved.</p>
+    </div>
+
+    <script>
+        function showSection(section) {
+            const sections = document.querySelectorAll('.content');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const activeSection = document.getElementById(section);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+
+        function toggleDropdown() {
+            const dropdown = document.querySelector('.dropdown');
+            dropdown.classList.toggle('active');
+        }
+
+        function searchUser() {
+            let input = document.querySelector('.search-bar').value.toLowerCase();
+            let rows = document.querySelectorAll('#users-table tbody tr');
+            rows.forEach(row => {
+                let name = row.cells[0].textContent.toLowerCase();
+                let email = row.cells[1].textContent.toLowerCase();
+                if (name.includes(input) || email.includes(input)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        }
+
+        // Mock data for dashboard stats
+        document.getElementById('user-qty').textContent = '150'; // Example number of users
+        document.getElementById('post-qty').textContent = '120'; // Example number of posts
+        document.getElementById('repost-qty').textContent = '50'; // Example number of reposts
+        document.getElementById('logged-in-users').textContent = '35'; // Example number of logged-in users
+        document.getElementById('logged-out-users').textContent = '115'; // Example number of logged-out users
+
+
+
+        showSection('home');
+    </script>
+</body>
+
+</html>
