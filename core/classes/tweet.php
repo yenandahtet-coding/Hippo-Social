@@ -362,4 +362,50 @@ class Tweet extends User
 		$result = $stmt->fetch(PDO::FETCH_OBJ);
 		return $result->repostCount;
 	}
+
+	// select all data form tweet and associate data with that tweet
+	public function getAllTweets()
+	{
+		$sql = "SELECT tweets.*, users.username FROM tweets LEFT JOIN users ON tweets.tweetBy = users.user_id ORDER BY tweetID DESC";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
+	}
+
+	// Delete tweet by ID
+	public function deleteTweets($tweetID)
+	{
+		$sql = "DELETE FROM tweets WHERE tweetID = :tweetID OR retweetID = :tweetID";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindValue(":tweetID", $tweetID, PDO::PARAM_INT);
+		return $stmt->execute();
+	}
+
+	// Update tweet
+	public function updateTweets($table, $id, $fields = array())
+	{
+		$columns = '';
+		$i = 1;
+		foreach ($fields as $name => $value) {
+			$columns .= "{$name} = :{$name}";
+			if ($i < count($fields)) {
+				$columns .= ', ';
+			}
+			$i++;
+		}
+		$sql = "UPDATE {$table} SET {$columns} WHERE tweetID = {$id}";
+		$stmt = $this->pdo->prepare($sql);
+		foreach ($fields as $name => $value) {
+			$stmt->bindValue(":{$name}", $value);
+		}
+		return $stmt->execute();
+	}
+
+	public function getAllRetweets()
+	{
+		$sql = "SELECT tweets.*, users.username FROM tweets LEFT JOIN users ON tweets.retweetBy = users.user_id WHERE tweets.retweetID != 0 ORDER BY tweetID DESC";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
+	}
 }

@@ -297,7 +297,7 @@
             if($getFromO->changePassword($email, $new_password)){
                 echo "<p class='success-message'>Password has been reset successfully!</p>";
                 // $getFromO->redirect('../index.php');
-                header("Location: ../index.php");
+                header("Location: ../index1.php");
                 exit;
             }
         }

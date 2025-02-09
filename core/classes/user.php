@@ -269,7 +269,7 @@ class User
 	// delete by id
 	public function deleteUser($id)
 	{
-		$sql = "DELETE FROM users WHERE id = :id";
+		$sql = "DELETE FROM users WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
@@ -280,16 +280,52 @@ class User
 		$sql = "SELECT COUNT(*) as total FROM users";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute();
-		$result = $stmt->fetch(PDO::FETCH_OBJ);
-		return $result->$result;
+		// $result = $stmt->fetch(PDO::FETCH_OBJ);
+		return $stmt->fetch(PDO::FETCH_OBJ);;
 	}
 
 	//ban user form database and not access to login
 	public function banUser($userId){
-		$sql = "UPDATE users SET isBanded = 0 WHERE id = :id";
+		$sql = "UPDATE users SET isBanded = 1 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->rowCount();
+	}
+	//unban user from database and access to login
+	public function unbanUser($userId){
+		$sql = "UPDATE users SET isBanded = 0 WHERE user_id = :id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->rowCount();
+	}
+
+	public function getAdmin(){
+		$sql = "SELECT * FROM users WHERE isAdmin = 1";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
+	}
+
+	public function getAdminProfile($admin_id)
+{
+    $sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath){
+		$passwordHash = md5($Password);
+		$sql = "UPDATE users SET username = :name, email = :email, password = :Password, profileImage = :profileImage WHERE user_id = :admin_id AND isAdmin = 1";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->bindParam(':Password', $passwordHash, PDO::PARAM_STR);
+		$stmt->bindParam(':profileImage', $profileImagePath, PDO::PARAM_STR);
+		return $stmt->execute();
 	}
 }

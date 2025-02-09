@@ -1,9 +1,10 @@
 <?php
+require_once '../../core/init.php';
     // get count of user form db
     // require_once '../../core/init.php';
-    // $userQty = $getFromU->countUser();
-    // $postQty = $getFromT->countPosts();
-    // $repostQty = $getFromT->countReposts();
+    $userQty = $getFromU->countUser()->total;
+    $postQty = $getFromT->countPosts();
+    $repostQty = $getFromT->countReposts();
 
 ?>
 
@@ -17,20 +18,20 @@
             <div class="stat-card">
                 <h3>Users Quantity</h3>
                 <p id="user-qty"><?php 
-                    // echo $userQty; 
-                ?>Loading...</p>
+                    echo $userQty; 
+                ?></p>
             </div>
             <div class="stat-card">
                 <h3>Posts Quantity</h3>
                 <p id="post-qty"><?php 
-                    // echo $postQty; 
-                ?>Loading...</p>
+                    echo $postQty; 
+                ?></p>
             </div>
             <div class="stat-card">
                 <h3>Reposts Quantity</h3>
                 <p id="repost-qty"><?php 
-                    // echo $repostQty; 
-                ?>Loading...</p>
+                    echo $repostQty; 
+                ?></p>
             </div>
             <div class="stat-card">
                 <h3>Logged In Users</h3>
@@ -39,6 +40,10 @@
             <div class="stat-card">
                 <h3>Logged Out Users</h3>
                 <p id="logged-out-users">Loading...</p>
+            </div>
+            <div class="stat-card">
+                <h3>Useage per Month</h3>
+                <p id="useage-per-month">Loading...</p>
             </div>
         </div>
     </div>
