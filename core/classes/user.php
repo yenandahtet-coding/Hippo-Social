@@ -60,6 +60,29 @@ class User
 		}
 	}
 
+	// condition if user is banded or not
+	public function userBanded($email)
+	{
+		$sql = "SELECT isBanded FROM users WHERE email = :email";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->execute();
+		$count = $stmt->rowCount();
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		echo '<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>';
+		if ($count > 0) {
+			//check if user is banded or not
+			if ($result->isBanded == 1) {
+				echo '<script>Swal.fire({title: "Account Banded",text: "Your account has been banded. Please contact the admin for more information.",icon: "error",button : false,});</script>';
+				return true;
+			} else {
+				return false;
+			}
+		} else {
+			return false;
+		}
+	}
+
 	public function register($email, $password, $screenName)
 	{
 		$passwordHash = md5($password);
@@ -73,14 +96,13 @@ class User
 		$_SESSION['user_id'] = $user_id;
 	}
 
-
 	public function userData($user_id)
 	{
 		$stmt = $this->pdo->prepare('SELECT * FROM `users` WHERE `user_id` = :user_id');
 		$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
 		$stmt->execute();
-
-		return $stmt->fetch(PDO::FETCH_OBJ);
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		return $result;
 	}
 
 	public function logout()
@@ -269,27 +291,68 @@ class User
 	// delete by id
 	public function deleteUser($id)
 	{
-		$sql = "DELETE FROM users WHERE id = :id";
+		$sql = "DELETE FROM users WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $id, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->rowCount();
 	}
 
-	public function countUser(){
+	public function countUser()
+	{
 		$sql = "SELECT COUNT(*) as total FROM users";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute();
-		$result = $stmt->fetch(PDO::FETCH_OBJ);
-		return $result->$result;
+		// $result = $stmt->fetch(PDO::FETCH_OBJ);
+		return $stmt->fetch(PDO::FETCH_OBJ);;
 	}
 
 	//ban user form database and not access to login
-	public function banUser($userId){
-		$sql = "UPDATE users SET isBanded = 0 WHERE id = :id";
+	public function banUser($userId)
+	{
+		$sql = "UPDATE users SET isBanded = 1 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->rowCount();
+	}
+	//unban user from database and access to login
+	public function unbanUser($userId)
+	{
+		$sql = "UPDATE users SET isBanded = 0 WHERE user_id = :id";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->rowCount();
+	}
+
+	public function getAdmin()
+	{
+		$sql = "SELECT * FROM users WHERE isAdmin = 1";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		return $stmt->fetchAll(PDO::FETCH_OBJ);
+	}
+
+	public function getAdminProfile($admin_id)
+	{
+		$sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+		$stmt->execute();
+		return $stmt->fetch(PDO::FETCH_OBJ);
+	}
+
+	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath)
+	{
+		$passwordHash = md5($Password);
+		$sql = "UPDATE users SET username = :name, email = :email, password = :Password, profileImage = :profileImage WHERE user_id = :admin_id AND isAdmin = 1";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->bindParam(':Password', $passwordHash, PDO::PARAM_STR);
+		$stmt->bindParam(':profileImage', $profileImagePath, PDO::PARAM_STR);
+		return $stmt->execute();
 	}
 }

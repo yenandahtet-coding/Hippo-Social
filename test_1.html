@@ -4,557 +4,470 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- <link rel="stylesheet" href="../../assets/css/adminhome.css"> -->
+    <title>ZenChat - Best Chat Service</title>
     <style>
-        * {
+        /* body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
-        }
+            background: linear-gradient(135deg, #283c86, #45a247);
+            color: white;
+            overflow-x: hidden;
+        } */
 
         body {
             font-family: 'Poppins', sans-serif;
-            background-color: #f1f1f1;
-            display: flex;
-            min-height: 100vh;
-            flex-direction: column;
-        }
-
-        /* Sidebar */
-        .sidebar {
-            width: 280px;
-            background: #2e2e2e;
-            color: #fff;
-            padding: 30px 20px;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .sidebar h2 {
-            text-align: center;
-            color: #fff;
-            font-size: 24px;
-            font-weight: 600;
-            margin-bottom: 40px;
-            letter-spacing: 2px;
-        }
-
-        .sidebar ul {
-            list-style-type: none;
+            margin: 0;
             padding: 0;
+            background: linear-gradient(135deg, #283c86, #45a247);
+            color: white;
+            overflow-x: hidden;
+            opacity: 0;
+            animation: fadeIn 1.5s forwards;
         }
 
-        .sidebar ul li {
-            margin: 20px 0;
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
         }
+        
 
-        .sidebar ul li a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            padding: 15px;
-            border-radius: 10px;
-            transition: background-color 0.3s ease, transform 0.3s ease;
-        }
-
-        .sidebar ul li a:hover {
-            background-color: #1a1a1a;
-            transform: translateX(15px);
-        }
-
-        .sidebar ul li a i {
-            margin-right: 15px;
-        }
-
-        /* Navbar */
-        .navbar {
-            flex-grow: 0;
+        header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: #fff;
-            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
-            margin-left: 280px;
-            /* Adjust to give space for sidebar */
-            position: sticky;
-            top: 0;
-            z-index: 999;
-        }
-
-        .profile {
-            display: flex;
-            align-items: center;
-            font-size: 16px;
-        }
-
-        .profile img {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            margin-right: 10px;
-        }
-
-        .profile-info {
-            color: #333;
-            margin-right: 20px;
-        }
-
-        .profile-info span {
-            display: block;
-        }
-
-        .content {
-            flex-grow: 1;
-            margin-left: 280px;
-            /* Adjust to give space for sidebar */
-            padding: 40px;
-            overflow: hidden;
-            display: none;
-            /* Hide all content sections initially */
-        }
-
-        .content.active {
-            display: block;
-            /* Only show the active section */
-        }
-
-        .card {
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            overflow: hidden;
-            margin-bottom: 30px;
-            transition: transform 0.3s ease;
-            /* transition: all 0.3s ease; */
-        }
-
-        .card:hover {
-            transform: translateY(-5px);
-
-            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-        }
-
-        .card-header {
-            background-color: #007bff;
-            color: #fff;
-            padding: 20px;
-            font-size: 20px;
-            font-weight: bold;
-
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .card-body {
-            padding: 30px;
-            font-size: 16px;
-            color: #666;
-        }
-
-        .footer {
-            text-align: center;
-            padding: 20px;
-            background: #f4f7fa;
+            background: rgba(0, 0, 0, 0.8);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            position: fixed;
             width: 100%;
-            position: relative;
-            bottom: 0;
-            font-size: 14px;
-            color: #888;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            animation: slideInDown 1s;
         }
 
-        /* Dropdown Menu */
-        .dropdown {
-            display: none;
-            margin-left: 20px;
-        }
-
-        .dropdown a {
-            font-size: 14px;
-            padding-left: 20px;
-            transition: transform 0.3s ease;
-        }
-
-        .dropdown a:hover {
-            transform: translateX(10px);
-        }
-
-        .dropdown.active {
-            display: block;
-        }
-
-        /* Mobile Responsive Design */
-        @media (max-width: 768px) {
-            .sidebar {
-                width: 100%;
-                position: static;
-                transform: translateX(-100%);
+        /* @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
             }
 
-            .sidebar.active {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        } */
+        @keyframes slideInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 700;
+            color: #ffcc00;
+        }
+
+        nav a {
+            color: white;
+            margin: 0 15px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease-in-out;
+        }
+
+        nav a:hover {
+            color: #ffcc00;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #ff007f, #ffcc00);
+            color: white;
+            padding: 14px 28px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease-in-out, transform 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: linear-gradient(45deg, #e6006e, #ffaa00);
+            transform: scale(1.05);
+        }
+
+        .hero {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 120px 80px;
+            text-align: left;
+            position: relative;
+            animation: fadeInUp 1.2s ease-in-out;
+            flex-wrap: wrap;
+            /* height: 100vh; */
+        }
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-text {
+            max-width: 50%;
+            padding-right: 20px;
+        }
+
+        .hero-text h1 {
+            font-size: 42px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .hero-images {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+            flex-wrap: wrap;
+            max-width: 40%;
+        }
+
+        .hero-images img {
+            /* max-width: 100%;
+            height: auto; */
+            display: flex;
+            width: 45%;
+            height: 45%;
+            border-radius: 15px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+
+            animation: slideInRight 1.5s;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
                 transform: translateX(0);
             }
-
-            .navbar {
-                flex-direction: column;
-                align-items: flex-start;
-                margin-left: 0;
-            }
-
-            .content {
-                margin-left: 0;
-            }
-
-            /* fidsifisdgfisdgif */
-            table {
-                width: 100%;
-                border-collapse: collapse;
-                text-align: left;
-            }
-
-            th,
-            td {
-                padding: 12px;
-                border: 1px solid #ddd;
-                text-align: center;
-            }
-
-            .actions button {
-                padding: 6px 12px;
-                margin: 2px;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-            }
-
-            .btn-edit {
-                background-color: green;
-                color: white;
-            }
-
-            .btn-delete {
-                background-color: red;
-                color: white;
-            }
-
-            .btn-edit:hover {
-                background-color: darkgreen;
-            }
-
-            .btn-delete:hover {
-                background-color: darkred;
-            }
-
-            .actions button:focus {
-                outline: none;
-            }
-            /* Layout for dashboard stats */
         }
 
-        .dashboard-stats {
-                display: grid;
-                grid-template-columns: repeat(3, 1fr);
-                gap: 20px;
-                margin-bottom: 20px;
-            }
+        .chat-interface img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.3);
+        }
 
-            .stat-card {
-                background-color: #f9f9f9;
-                border: 2px solid #ccc;
-                /* Adding a visible border */
-                border-radius: 8px;
-                padding: 20px;
-                box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        .img1 {
+            margin: 10% 0 -40px 0;
+            transition: transform 0.3s ease-in-out;
+            z-index: 0;
+        }
+
+        .img2 {
+            margin: -120px 0 0 180px;
+            transition: transform 0.3s ease-in-out;
+            z-index: 1;
+        }
+
+        .team-chats,
+        .chat-interface,
+        .contact,
+        .about {
+            text-align: center;
+            padding: 80px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            animation: fadeInUp 1.5s;
+            border-radius: 12px;
+            margin-top: 50px;
+        }
+
+        .contact form {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            max-width: 500px;
+            margin: auto;
+        }
+
+        .contact input,
+        .contact textarea {
+            padding: 14px;
+            border-radius: 8px;
+            border: none;
+            font-size: 16px;
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact button {
+            padding: 14px;
+            background: #ffcc00;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s;
+        }
+
+        .contact button:hover {
+            background: #ffaa00;
+        }
+
+        .about h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .about p {
+            font-size: 18px;
+            max-width: 800px;
+            margin: auto;
+            line-height: 1.6;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero {
+                flex-direction: column;
+                padding: 60px 20px;
                 text-align: center;
-                transition: transform 0.3s ease;
             }
 
-            .stat-card:hover {
-                transform: scale(1.05);
+            .hero-text {
+                max-width: 100%;
+                margin-bottom: 30px;
             }
 
-            .stat-card h3 {
-                font-size: 18px;
-                color: #333;
-                margin-bottom: 10px;
-                font-weight: 600;
+            .hero-images {
+                flex-direction: column;
+                gap: 15px;
+                max-width: 100%;
             }
 
-            .stat-card p {
-                font-size: 24px;
-                font-weight: bold;
-                color: #007bff;
-                margin: 0;
+            .hero-images img {
+                max-width: 80%;
             }
 
-            @media (max-width: 1024px) {
-                .dashboard-stats {
-                    grid-template-columns: repeat(2, 1fr);
-                    /* Adjust for medium screens */
-                }
+            .buttons {
+                flex-direction: column;
+                gap: 10px;
             }
+        }
 
-            @media (max-width: 768px) {
-                .dashboard-stats {
-                    grid-template-columns: 1fr;
-                    /* Stack vertically for smaller screens */
-                }
-            }
+        footer {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            text-align: center;
+            color: white;
+            margin-top: 50px;
+            /* Add some top margin */
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-around;
+            /* Distribute items evenly */
+            flex-wrap: wrap;
+            /* Allow wrapping on smaller screens */
+        }
+
+        .footer-section {
+            margin-bottom: 20px;
+            /* Space between sections */
+            flex: 1;
+            /* Each section takes equal width */
+            min-width: 200px;
+            /* Minimum width for each section */
+        }
+
+        .footer-section h4 {
+            color: #ffcc00;
+            /* Example color */
+            margin-bottom: 10px;
+        }
+
+        .footer-section ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-section li {
+            margin-bottom: 5px;
+        }
+
+        .footer-section a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #ffcc00;
+        }
+
+        .footer-bottom {
+            margin-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            padding-top: 10px;
+        }
     </style>
 </head>
 
 <body>
-    <div class="sidebar">
-        <h2>Admin Panel</h2>
-        <ul>
-            <li><a href="#" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a></li>
-            <li><a href="#" onclick="showSection('managepost')"><i class="fas fa-edit"></i> Manage Posts</a></li>
-            <li><a href="#" onclick="showSection('managerepost')"><i class="fas fa-retweet"></i> Manage Reposts</a></li>
-            <li><a href="#" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
-            <li>
-                <a href="#" onclick="toggleDropdown()"><i class="fas fa-cogs"></i> Settings</a>
-                <div class="dropdown">
-                    <a href="?page=general_setting" onclick="showSection('settings')">General Settings</a>
-                    <a href="?page=account_setting" onclick="showSection('account')">Account Settings</a>
-                </div>
-            </li>
-        </ul>
-    </div>
+    <header>
+        <div class="logo">Hippo Social</div>
+        <nav style="margin-right: 5%;">
+            <a href="#home">Home</a>
+            <a href="#about">About</a>
+            <a href="#contact">Contact</a>
+            <a href="#" class="login">Log In</a>
+        </nav>
+    </header>
 
-    <div class="navbar">
-        <div class="profile">
-            <img src="../assets/images/defaultpic.jpg" alt="Profile Picture">
-            <div class="profile-info">
-                <span>
-                    <!-- <?php
-                        // echo $admin_name;
-                        htmlspecialchars($admin_name);
-                        ?> -->
-                </span>
-                <span>
-                    <!-- <?php
-                        // echo $admin_email;
-                        htmlspecialchars($admin_email);
-                        ?> -->
-                </span>
+    <section class="hero" id="home">
+        <div class="hero-text">
+            <h1>Have your best chat</h1>
+            <p>Fast, easy, unlimited chat services</p>
+            <div class="buttons">
+                <button class="btn-primary">Get Started</button>
+                <button class="btn-primary">Get a Demo</button>
             </div>
         </div>
-        <a href="../../index1.php"><i class="fas fa-sign-out-alt"></i> Logout</a>
+        <div class="hero-images">
+            <img src="assets/images/user1.jpg" class="img1">
+            <img src="assets/images/user2.jpg" class="img2">
+        </div>
+    </section>
 
-    </div>
-    <div class="content" id="home">
-        <div class="card">
-            <div class="card-header">Welcome to the Admin Dashboard</div>
-            <div class="card-body">
-                <p>Here, you can manage users, posts, and see activity reports. Use the sidebar to navigate.</p>
+    <section class="team-chats">
+        <h2>Instant Team Chats</h2>
+        <p>
+            Instant Team Chat enhances communication in fast-paced work environments by enabling real-time messaging,
+            file sharing, and group discussions. It helps teams stay organized and collaborate efficiently on various
+            topics, from project updates to casual conversations. Key features include quick notifications, emojis,
+            message search, group creation, and the ability to see online statuses. The platform ensures privacy with
+            encrypted messages, making it a secure and effective solution for seamless team communication, whether your
+            team is in the same room or spread across different locations.
+        </p>
+        <button class="btn-secondary">Learn More</button>
+    </section>
 
-                <!-- Dashboard Stats -->
-                <div class="dashboard-stats">
-                    <div class="stat-card">
-                        <h3>Users Quantity</h3>
-                        <p id="user-qty">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Posts Quantity</h3>
-                        <p id="post-qty">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Reposts Quantity</h3>
-                        <p id="repost-qty">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Logged In Users</h3>
-                        <p id="logged-in-users">Loading...</p>
-                    </div>
-                    <div class="stat-card">
-                        <h3>Logged Out Users</h3>
-                        <p id="logged-out-users">Loading...</p>
-                    </div>
-                </div>
+    <section class="about" id="about">
+        <h2>About ZenChat</h2>
+        <p>ZenChat is a leading chat service provider that offers fast, secure, and unlimited messaging for businesses
+            and individuals. With cutting-edge technology and a user-friendly interface, ZenChat makes communication
+            seamless and effective. Whether you're a small team or a large enterprise, ZenChat enables you to stay
+            connected and collaborate efficiently. Our service is designed to make your messaging experience fast, easy,
+            and enjoyable.</p>
+    </section>
+
+    <section class="chat-interface">
+        <img src="assets/images/home_image.png" alt="Chat UI Preview">
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Contact Us</h2>
+        <form>
+            <input type="text" placeholder="Your Name" required>
+            <input type="email" placeholder="Your Email" required>
+            <textarea placeholder="Your Message" rows="5" required></textarea>
+            <button type="submit">Send Message</button>
+        </form>
+    </section>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Help & Support</h4>
+                <ul>
+                    <li><a href="#">Getting Started</a></li>
+                    <li><a href="#">Video Tours</a></li>
+                    <li><a href="#">Tutorials</a></li>
+                    <li><a href="#">Community Forum</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Features</h4>
+                <ul>
+                    <li><a href="#">User Login</a></li>
+                    <li><a href="#">Chat Bots</a></li>
+                    <li><a href="#">Encryption</a></li>
+                    <li><a href="#">Cloud Synch</a></li>
+                    <li><a href="#">Geolocation</a></li>
+                    <li><a href="#">Push Notifications</a></li>
+                    <li><a href="#">Offline Mode</a></li>
+                    <li><a href="#">iOS/Android</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h4>Need Help?</h4>
+                <ul>
+                    <li><a href="mailto:help@zenchat.io">help@zenchat.io</a></li>
+                    <li><a href="tel:1-800-200-300">1-800 200 300</a></li>
+                    <li><a href="#">2500 Green Road Park, Palto Alto, CA</a></li>
+                </ul>
             </div>
         </div>
-    </div>
-
-
-
-    <div class="content" id="users">
-        <div class="card">
-            <div class="card-header">User Management</div>
-            <div class="card-body">
-                <p>Manage users, view details, and perform actions such as deactivating or deleting users.</p>
-                <!-- Search Bar (Optional) -->
-                <input type="text" class="search-bar" placeholder="Search by Name or Email" onkeyup="searchUser()"
-                    style="width: 100%; padding: 10px; margin-bottom: 20px; border-radius: 5px;">
-
-                <!-- User Table -->
-                <table id="users-table" border="1" style="width: 100%; border-collapse: collapse; text-align: left;">
-                    <thead>
-                        <tr>
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Role</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>John Doe</td>
-                            <td>johndoe@example.com</td>
-                            <td>Admin</td>
-                            <td>
-                                <button class="btn-edit"
-                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
-                                <button class="btn-delete"
-                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Jane Smith</td>
-                            <td>janesmith@example.com</td>
-                            <td>User</td>
-                            <td>
-                                <button class="btn-edit"
-                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
-                                <button class="btn-delete"
-                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>David Brown</td>
-                            <td>davidbrown@example.com</td>
-                            <td>User</td>
-                            <td>
-                                <button class="btn-edit"
-                                    style="background-color: green; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;">Edit</button>
-                                <button class="btn-delete"
-                                    style="background-color: red; color: white; padding: 8px 15px; border: none; border-radius: 5px; cursor: pointer;"
-                                    onclick="return confirm('Are you sure?')">Delete</button>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+        <div class="footer-bottom">
+            &copy; Copyrights zenchat Inc. All rights reserved.
         </div>
-    </div>
-
-    <div class="content" id="managepost">
-        <div class="card">
-            <div class="card-header">Manage Posts</div>
-            <div class="card-body">
-                <p>Manage user posts, approve or delete content as needed.</p>
-            </div>
-        </div>
-        <!-- <?php include 'manage_posts.php'; ?> -->
-    </div>
-
-    <div class="content" id="managerepost">
-        <div class="card">
-            <div class="card-header">Manage Reposts</div>
-            <div class="card-body">
-                <p>Handle reposts and platform activities effectively.</p>
-            </div>
-        </div>
-        <!-- <?php include 'manage_reposts.php'; ?> -->
-    </div>
-
-    <div class="content" id="reports">
-        <div class="card">
-            <div class="card-header">Reports</div>
-            <div class="card-body">
-                <p>View detailed reports on platform activity and performance.</p>
-            </div>
-        </div>
-        <!-- <?php include 'manage_reports.php'; ?> -->
-    </div>
-
-    <div class="content" id="settings">
-        <div class="card">
-            <div class="card-header">Settings</div>
-            <div class="card-body">
-                <p>Configure platform settings and preferences for users and content.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="content" id="account">
-        <div class="card">
-            <div class="card-header">Account Settings</div>
-            <div class="card-body">
-                <p>Update your account details and preferences here.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="content" id="logout">
-        <div class="card">
-            <div class="card-header">Logout</div>
-            <div class="card-body">
-                <p>You have been logged out successfully. <a href="#">Log in again</a>.</p>
-            </div>
-        </div>
-    </div>
-
-    <div class="footer">
-        <p>© 2025 Admin Panel. All rights reserved.</p>
-    </div>
-
-    <script>
-        function showSection(section) {
-            const sections = document.querySelectorAll('.content');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            const activeSection = document.getElementById(section);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-        }
-
-        function toggleDropdown() {
-            const dropdown = document.querySelector('.dropdown');
-            dropdown.classList.toggle('active');
-        }
-
-        function searchUser() {
-            let input = document.querySelector('.search-bar').value.toLowerCase();
-            let rows = document.querySelectorAll('#users-table tbody tr');
-            rows.forEach(row => {
-                let name = row.cells[0].textContent.toLowerCase();
-                let email = row.cells[1].textContent.toLowerCase();
-                if (name.includes(input) || email.includes(input)) {
-                    row.style.display = '';
-                } else {
-                    row.style.display = 'none';
-                }
-            });
-        }
-
-        // Mock data for dashboard stats
-        document.getElementById('user-qty').textContent = '150'; // Example number of users
-        document.getElementById('post-qty').textContent = '120'; // Example number of posts
-        document.getElementById('repost-qty').textContent = '50'; // Example number of reposts
-        document.getElementById('logged-in-users').textContent = '35'; // Example number of logged-in users
-        document.getElementById('logged-out-users').textContent = '115'; // Example number of logged-out users
-
-
-
-        showSection('home');
-    </script>
+    </footer>
 </body>
 
 </html>
+<script>
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+        e.preventDefault();
+
+        const targetId = this.getAttribute('href').substring(1);
+        const targetElement = document.getElementById(targetId);
+
+        if (targetElement) {
+            const headerHeight = document.querySelector('header').offsetHeight; // Get header height
+            const targetOffset = targetElement.offsetTop - headerHeight; // Adjust offset for header
+
+            window.scrollTo({
+                top: targetOffset,
+                behavior: 'smooth'
+            });
+        }
+    });
+});
+</script>

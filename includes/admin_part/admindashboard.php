@@ -1,26 +1,17 @@
 <?php
-// session_start();
 require_once '../../core/init.php';
 
 if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
     header("Location: ../../index1.php");
     exit;
 }
-// $admin_name = $_SESSION['admin_name'];
-// $admin_email = $_SESSION['admin_email'];
-// $getFromU->logout();
-// if (isset($_SESSION['logoutBtn'])) {
-//     if ($getFromU->loggedIn() === false) {
-//         header('Location:' . BASE_URL . 'index1.php');
-//         exit;
-//     }
-// }
 
-// if logoutBtn is selected go to index1.php 
 if (isset($_POST['logoutBtn'])) {
     $getFromU->logout();
     header('Location:' . BASE_URL . 'index1.php');
 }
+$admin_id = $_SESSION['user_id'];
+$admin = $getFromU->getAdminProfile($admin_id);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -32,22 +23,154 @@ if (isset($_POST['logoutBtn'])) {
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link rel="stylesheet" href="../../assets/css/adminhome.css">
+    <style>
+        .account-card {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            padding: 30px;
+            animation: fadeInUp 0.5s ease-out;
+        }
+
+        .card-header {
+            background-color: #4e73df;
+            color: #fff;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: #4e73df;
+        }
+
+        .btn-save {
+            background-color: #4e73df;
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: none;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+        }
+
+        .btn-save:hover {
+            background-color: #2e59d9;
+            transform: translateY(-3px);
+        }
+
+        /* Adding a fade-in effect to the account section */
+        @keyframes fadeInUp {
+            0% {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .account-card {
+                padding: 20px;
+            }
+
+            .form-control {
+                font-size: 14px;
+            }
+
+            .btn-save {
+                width: 100%;
+            }
+        }
+
+
+        .password-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 10px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: transform 0.2s ease-in-out;
+        }
+
+        .toggle-password:hover {
+            transform: scale(1.2);
+        }
+
+        .form-control {
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            box-shadow: 0 0 8px rgba(0, 123, 255, 0.8);
+            transform: scale(1.02);
+        }
+
+        .btn-save {
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .btn-save:hover {
+            background-color: #0056b3;
+            transform: scale(1.05);
+        }
+    </style>
 </head>
 
 <body>
+    <script>
+        function showSection(section) {
+            const sections = document.querySelectorAll('.content');
+            sections.forEach(sec => sec.classList.remove('active'));
+
+            const activeSection = document.getElementById(section);
+            if (activeSection) {
+                activeSection.classList.add('active');
+            }
+        }
+    </script>
+
     <div class="sidebar">
         <h2>Admin Panel</h2>
         <ul>
-            <li><a href="#" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></li>
-            <li><a href="#" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a></li>
-            <li><a href="#" onclick="showSection('managepost')"><i class="fas fa-edit"></i> Manage Posts</a></li>
-            <li><a href="#" onclick="showSection('managerepost')"><i class="fas fa-retweet"></i> Manage Reposts</a></li>
-            <li><a href="#" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
+            <li><a href="#home" onclick="showSection('home')"><i class="fas fa-home"></i> Home</a></li>
+            <li><a href="#users" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a></li>
+            <li><a href="#managepost" onclick="showSection('managepost')"><i class="fas fa-edit"></i> Manage Posts</a></li>
+            <li><a href="#managerepost" onclick="showSection('managerepost')"><i class="fas fa-retweet"></i> Manage Reposts</a></li>
+            <li><a href="#reports" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
             <li>
-                <a href="#" onclick="toggleDropdown()"><i class="fas fa-cogs"></i> Settings</a>
+                <a href="#settings" onclick="toggleDropdown()"><i class="fas fa-cogs"></i> Settings</a>
                 <div class="dropdown">
-                    <a href="#" onclick="showSection('settings')">General Settings</a>
-                    <a href="#" onclick="showSection('account')">Account Settings</a>
+                    <a href="#general_setting" onclick="showSection('settings')">Term & Privacy</a>
+                    <a href="#account_setting" onclick="showSection('account')">Account Settings</a>
                 </div>
             </li>
         </ul>
@@ -55,16 +178,17 @@ if (isset($_POST['logoutBtn'])) {
 
     <div class="navbar">
         <div class="profile">
-            <img src="../../assets/images/defaultpic.jpg" alt="Profile Picture">
+            <?php 
+                $profileImagePath = '../../' . htmlspecialchars($admin->profileImage);
+            ?>
+            <img src="<?php echo $profileImagePath ?>" alt="Profile Picture">
             <div class="profile-info">
                 <span><?php
-                        // echo $admin_name;
-                        // htmlspecialchars($admin_name);
-                        ?>thant</span>
+                        echo htmlspecialchars($admin->username);
+                        ?></span>
                 <span><?php
-                        // echo $admin_email;
-                        // htmlspecialchars($admin_email);
-                        ?>thant@gmail.com</span>
+                        echo htmlspecialchars($admin->email);
+                        ?></span>
             </div>
         </div>
         <a href="<?php echo BASE_URL; ?>includes/logout.php" name="logoutBtn"><i class="fas fa-sign-out-alt"></i> Logout</a>
@@ -72,72 +196,71 @@ if (isset($_POST['logoutBtn'])) {
     </div>
 
     <div class="content" id="home">
-        <!-- <div class="card"> -->
-        <!-- <div class="card-header">Welcome to the Admin Dashboard</div>
-            <div class="card-body">
-                <p>Here, you can manage users, posts, and see activity reports. Use the sidebar to navigate.</p>
-            </div>
-        </div> -->
         <?php include 'home.php'; ?>
     </div>
 
     <div class="content" id="users">
-        <!-- <div class="card">
-            <div class="card-header">User Management</div>
-            <div class="card-body">
-                <p>Manage users, view details, and perform actions such as deactivating or deleting users.</p>
-            </div>
-        </div> -->
         <?php include 'manage_users.php'; ?>
     </div>
 
     <div class="content" id="managepost">
-        <!-- <div class="card">
-            <div class="card-header">Manage Posts</div>
-            <div class="card-body">
-                <p>Manage user posts, approve or delete content as needed.</p>
-            </div>
-        </div> -->
         <?php include 'manage_posts.php'; ?>
     </div>
 
     <div class="content" id="managerepost">
-        <!-- <div class="card">
-            <div class="card-header">Manage Reposts</div>
-            <div class="card-body">
-                <p>Handle reposts and platform activities effectively.</p>
-            </div>
-        </div> -->
         <?php include 'manage_reposts.php'; ?>
     </div>
 
     <div class="content" id="reports">
-        <!-- <div class="card">
-            <div class="card-header">Reports</div>
-            <div class="card-body">
-                <p>View detailed reports on platform activity and performance.</p>
-            </div>
-        </div> -->
         <?php include 'manage_reports.php'; ?>
     </div>
 
     <div class="content" id="settings">
         <div class="card">
-            <div class="card-header">Settings</div>
+            <div class="card-header">Terms & Privacy</div>
             <div class="card-body">
-                <p>Configure platform settings and preferences for users and content.</p>
+                <p>Configure platform terms and privacy for users and content.</p>
+                <h3>Hippo-Social's Terms of Service and Privacy Policy outline how Twitter collects and uses user information. Users agree to these terms when they use Hippo Social.</h3>
+                <dl>
+                    <dt>
+                        <h4>Terms of Service</h4>
+                    </dt>
+                    <dd>
+                        <p>Users must agree to the Terms of Service to use Hippo Social
+                            Users are responsible for the content they post and must comply with applicable laws
+                            Hippo Social can suspend or terminate accounts for violating the Terms of Service.</p>
+                    </dd>
+                    <dt>
+                        <h4>Privacy Policy</h4>
+                    </dt>
+                    <dd>
+                        <p>Users consent to the collection and use of their information as described in the Privacy Policy
+                            Hippo Social may transfer user information to other countries for storage, processing, and use
+                            Hippo Social may keep user information longer than its policies specify for legal and safety reasons.</p>
+                    </dd>
+                    <dt>
+                        <h4>Privacy</h4>
+                    </dt>
+                    <dd>
+                        <ul>
+                            <li>Users' names and usernames are public, but they can use a pseudonym</li>
+                            <li>Users can control notifications they receive from Hippo Social</li>
+                            <li>Hippo Social does not use private Direct Message content to serve ads</li>
+                            <li>Users can opt out of interest-based advertising</li>
+                            <li>Hippo-Social's private information policy prohibits sharing other people's private information without their permission</li>
+                        </ul>
+                    </dd>
+                </dl>
             </div>
         </div>
     </div>
 
     <div class="content" id="account">
-        <div class="card">
-            <div class="card-header">Account Settings</div>
-            <div class="card-body">
-                <p>Update your account details and preferences here.</p>
-            </div>
-        </div>
+        <?php
+        include 'account_setting.php'; 
+        ?>
     </div>
+
 
     <div class="content" id="logout">
         <div class="card">
@@ -153,15 +276,6 @@ if (isset($_POST['logoutBtn'])) {
     </div>
 
     <script>
-        function showSection(section) {
-            const sections = document.querySelectorAll('.content');
-            sections.forEach(sec => sec.classList.remove('active'));
-
-            const activeSection = document.getElementById(section);
-            if (activeSection) {
-                activeSection.classList.add('active');
-            }
-        }
         showSection('home');
 
         function toggleDropdown() {

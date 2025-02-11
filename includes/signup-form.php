@@ -1,6 +1,8 @@
 <?php
+ob_start();
 if ($_SERVER['REQUEST_METHOD'] == "GET" && realpath(__FILE__) == realpath($_SERVER['SCRIPT_FILENAME'])) {
 	header('Location: ../index.php');
+	// exit;
 }
 if(isset($_POST['signup'])){
 	$screenName = $_POST['screenName'];
@@ -33,30 +35,6 @@ if(isset($_POST['signup'])){
 	}
 }
 ?>
-<!--
-<form method="post">
-<div class="signup-div">
-	<h3>Sign up </h3>
-	<ul>
-		<li>
-		    <input type="text" name="screenName" placeholder="Full Name"/>
-		</li>
-		<li>
-		    <input type="email" name="email" placeholder="Email"/>
-		</li>
-		<li>
-			<input type="password" name="password" placeholder="Password"/>
-		</li>
-		<li>
-			<input type="submit" name="signup" Value="Signup for Twitter">
-		</li>
-		
-	</ul>
-
-</div>
-</form>
--->
-
 <form method="post" autocomplete="off">
               <?php
       if(isset($error)){

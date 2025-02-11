@@ -1,5 +1,6 @@
 <?php
 include 'core/init.php';
+$profileData = null;
  if (isset($_GET['username']) === true && empty($_GET['username']) === false) {
   $username = $getFromU->checkInput($_GET['username']);
   $profileId = $getFromU->userIdByUsername($username);
@@ -11,6 +12,7 @@ include 'core/init.php';
  
   if (!$profileData) {
     header('Location: '.BASE_URL.'index.php');
+    exit();
   }
 }
 
@@ -23,15 +25,13 @@ include 'core/init.php';
     <title><?php echo $profileData->screenName.' (@'.$profileData->username.')'; ?></title>
     <meta charset="UTF-8" />
     
-    <!-- <link rel="shortcut icon" type="image/x-icon" href="./assets/images/bird.svg"> -->
-    
-      	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.css"/>
     <link rel='stylesheet' href='<?php echo BASE_URL; ?>assets/css/style-complete.css' />
     <link rel='stylesheet' href='<?php echo BASE_URL; ?>assets/css/style.css' />
     <link rel='stylesheet' href='<?php echo BASE_URL; ?>assets/css/font-awesome.css' />
     <link rel='stylesheet' href='<?php echo BASE_URL; ?>assets/css/bootstrap.css' />
     <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.1.1.min.js"></script>
-      	<script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.js" integrity="sha256-16cdPddA6VdVInumRGo6IbivbERE8p7CQR3HzTBuELA=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -139,3 +139,4 @@ include 'core/init.php';
 </body>
 
 </html>
+<!-- <?php print_r($profileData); ?> -->

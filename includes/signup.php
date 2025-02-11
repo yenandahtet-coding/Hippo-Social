@@ -1,8 +1,10 @@
 <?php
+ob_start();
 if (isset($_GET['step']) === true && empty($_GET['step']) === false) {
 	include '../core/init.php';
 	if (isset($_SESSION['user_id']) === false) {
 		header('Location: ../index.php');
+		// exit;
 	}
 
 	$user_id = $_SESSION['user_id'];
@@ -21,7 +23,9 @@ if (isset($_GET['step']) === true && empty($_GET['step']) === false) {
 				$error = "Username is already taken!";
 			} else {
 				$getFromU->update('users', $user_id, array('username' => $username));
-				header('Location: signup.php?step=2');
+				// header('Location: signup.php?step=2');
+				header("Location: signup.php?step=2");
+				// exit;
 			}
 		} else {
 			$error = "Please enter your username to choose";
@@ -95,22 +99,16 @@ if (isset($_GET['step']) === true && empty($_GET['step']) === false) {
 									Tell us about all the stuff you love and we'll help you get set up.
 								</p>
 								<span>
-									<a href='../home.php' class='backButton' style="color:var(--twitter-color);">Let's go!</a>
+									<a href='../home.php' class='backButton' style="color: blue;">Let's go!</a>
 								</span>
 							</div>
 						</div>
 					<?php } ?>
-
 				</div>
-
 			</div>
-			<
-				</div>
-
+			</div>
 	</body>
-
 	</html>
-
 <?php
 }
 ?>

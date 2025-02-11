@@ -14,6 +14,7 @@
     $getFromM = new Message($pdo);
 	$getFromO = new OTP($pdo);
   
-  	define('BASE_URL', 'http://localhost/twitter/');
+  	// define('BASE_URL', 'http://localhost/twitter/');
+	define('BASE_URL', 'http://localhost/twitter/');
  ?>                                                   
  
