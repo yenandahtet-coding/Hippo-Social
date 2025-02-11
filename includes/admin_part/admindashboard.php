@@ -184,9 +184,17 @@ $admin = $getFromU->getAdminProfile($admin_id);
             <img src="<?php echo $profileImagePath ?>" alt="Profile Picture">
             <div class="profile-info">
                 <span><?php
+<<<<<<< HEAD
                         echo htmlspecialchars($admin->username);
                         ?></span>
                 <span><?php
+=======
+                        // echo $admin_name;
+                        echo htmlspecialchars($admin->username);
+                        ?></span>
+                <span><?php
+                        // echo $admin_email;
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
                         echo htmlspecialchars($admin->email);
                         ?></span>
             </div>
@@ -259,6 +267,50 @@ $admin = $getFromU->getAdminProfile($admin_id);
         <?php
         include 'account_setting.php'; 
         ?>
+<<<<<<< HEAD
+=======
+        <!-- <div class="card account-card">
+            <div class="card-header">
+                <h3>Account Settings</h3>
+            </div>
+            <div class="card-body">
+                <form id="account-form" action="account_setting.php" method="POST" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="profile_picture">Profile Picture</label>
+                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($admin->username); ?>" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin->email); ?>" required>
+                    </div>
+
+                    <div class="form-group password-container">
+                        <label for="password">New Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="password" name="password" class="form-control">
+                            <span class="toggle-password" onclick="togglePassword('password')">&#128065;</span>
+                        </div>
+                    </div>
+
+                    <div class="form-group password-container">
+                        <label for="confirm_password">Confirm Password</label>
+                        <div class="password-wrapper">
+                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
+                            <span class="toggle-password" onclick="togglePassword('confirm_password')">&#128065;</span>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="btn btn-save" name="save-changes">Save Changes</button>
+                </form>
+            </div>
+        </div> -->
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
     </div>
 
 
@@ -296,6 +348,58 @@ $admin = $getFromU->getAdminProfile($admin_id);
                 }
             });
         }
+
+
+
+    //     function togglePassword(fieldId) {
+    //     var field = document.getElementById(fieldId);
+    //     field.type = field.type === "password" ? "text" : "password";
+    // }
+
+    // document.getElementById('account-form').addEventListener('submit', function(event) {
+    //     event.preventDefault();
+
+    //     var formData = new FormData(this);
+
+    //     fetch('account_setting.php', { 
+    //         method: 'POST',
+    //         body: formData
+    //     })
+    //     .then(response => response.json()) // Expect JSON response
+    //     // .then(Response => Response.text())
+    //     // .then(text => {
+    //     //     console.log(text);
+    //     //     return JSON.parse(text);
+    //     // })
+    //     .then(data => {
+    //         console.log(data);
+    //         if (data.status === "success") {
+    //             Swal.fire({
+    //                 title: "Profile Updated!",
+    //                 text: "Your profile has been successfully updated.",
+    //                 icon: "success",
+    //                 confirmButtonText: "OK"
+    //             }).then(() => {
+    //                 window.location.href = "admindashboard.php"; // Redirect after success
+    //             });
+    //         } else {
+    //             Swal.fire({
+    //                 title: "Update Failed!",
+    //                 text: data.message,
+    //                 icon: "error",
+    //                 confirmButtonText: "Try Again"
+    //             });
+    //         }
+    //     })
+    //     .catch(error => {
+    //         console.error("Error:", error);
+    //         Swal.fire({
+    //             title: "Error!",
+    //             text: "Something went wrong. Please try again.",
+    //             icon: "error"
+    //         });
+    //     });
+    // });
     </script>
 </body>
 

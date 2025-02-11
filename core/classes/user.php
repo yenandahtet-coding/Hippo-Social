@@ -308,8 +308,12 @@ class User
 	}
 
 	//ban user form database and not access to login
+<<<<<<< HEAD
 	public function banUser($userId)
 	{
+=======
+	public function banUser($userId){
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "UPDATE users SET isBanded = 1 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
@@ -317,8 +321,12 @@ class User
 		return $stmt->rowCount();
 	}
 	//unban user from database and access to login
+<<<<<<< HEAD
 	public function unbanUser($userId)
 	{
+=======
+	public function unbanUser($userId){
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "UPDATE users SET isBanded = 0 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
@@ -326,8 +334,12 @@ class User
 		return $stmt->rowCount();
 	}
 
+<<<<<<< HEAD
 	public function getAdmin()
 	{
+=======
+	public function getAdmin(){
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "SELECT * FROM users WHERE isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute();
@@ -335,6 +347,7 @@ class User
 	}
 
 	public function getAdminProfile($admin_id)
+<<<<<<< HEAD
 	{
 		$sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
@@ -345,6 +358,17 @@ class User
 
 	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath)
 	{
+=======
+{
+    $sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
+    $stmt = $this->pdo->prepare($sql);
+    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
+    $stmt->execute();
+    return $stmt->fetch(PDO::FETCH_OBJ);
+}
+
+	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath){
+>>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$passwordHash = md5($Password);
 		$sql = "UPDATE users SET username = :name, email = :email, password = :Password, profileImage = :profileImage WHERE user_id = :admin_id AND isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
