@@ -227,7 +227,8 @@
         .reset-btn {
             width: 100%;
             padding: 12px 15px;
-            background: linear-gradient(45deg, #ff6b6b, #ff8e53);
+            /* background: linear-gradient(45deg, #ff6b6b, #ff8e53); */
+            background: linear-gradient(45deg,rgba(40, 108, 255, 0.76), #ff8e53);
             color: white;
             border: none;
             border-radius: 8px;
@@ -246,26 +247,35 @@
         }
 
         .reset-btn::before {
-            content: '';
+            /* content: ''; */
+            color: white;
             position: absolute;
             top: 50%;
             left: 50%;
             width: 300%;
             height: 300%;
-            background-color: white;
+            background-color:rgb(196, 69, 254);
             transition: all 0.4s ease;
             border-radius: 50%;
             transform: translate(-50%, -50%) scale(1);
         }
 
+        .reset-btn::after {
+            content: '';
+            color: black;
+            background-color: skyblue;
+        }
+
         .reset-btn:hover {
-            background: linear-gradient(135deg, #6a11cb, #2575fc);
+            /* background: linear-gradient(135deg, #6a11cb, #2575fc); */
+            background: linear-gradient(45deg, #ff8e53,rgba(40, 108, 255, 0.76));
             transform: scale(1.05);
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
         }
 
         .reset-btn:hover::before {
             transform: translate(-50%, -50%) scale(0);
+            background-color: skyblue;
         }
 
         .reset-btn:focus {
@@ -317,7 +327,7 @@
             <button type="submit" name="btnReset" class="reset-btn">Reset Password</button>
         </form>
         <div class="link">
-            <a href="index.php">Back to Login</a>
+            <a href="../index1.php">Back to Login</a>
         </div>
     </div>
 

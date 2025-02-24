@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome to ConnectSphere</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #1c1c2b, #3b5998);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Header with Glassmorphism */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 50px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        nav{
+            margin-right: 7%;
+        }
+
+        header nav a {
+            color: #fff;
+            text-decoration: none;
+            margin-left: 20px;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+
+        header nav a:hover {
+            color: #3b5998;
+        }
+
+        /* Hero Section */
+        .intro {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            padding: 0 20px;
+            background: url('https://via.placeholder.com/1920x1080') center/cover no-repeat;
+            position: relative;
+        }
+
+        .intro::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 0;
+        }
+
+        .intro h2, .intro p, .intro button {
+            position: relative;
+            z-index: 1;
+        }
+
+        .intro h2 {
+            font-size: 60px;
+            margin: 0 0 20px;
+            color: #fff;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            animation: fadeIn 2s ease-in-out;
+        }
+
+        .intro p {
+            font-size: 20px;
+            max-width: 600px;
+            margin: 10px auto 30px;
+            line-height: 1.6;
+            animation: fadeIn 3s ease-in-out;
+        }
+
+        .intro button {
+            padding: 12px 35px;
+            font-size: 18px;
+            color: #fff;
+            background: linear-gradient(135deg, #3b5998, #8b9dc3);
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: 0.3s;
+            animation: fadeIn 4s ease-in-out;
+        }
+
+        .intro button:hover {
+            background: #fff;
+            color: #3b5998;
+        }
+
+        /* Section Styling */
+        section {
+            padding: 100px 50px;
+            text-align: center;
+            background: rgba(255, 255, 255, 0.1);
+            margin: 20px auto;
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            opacity: 0;
+            transform: translateY(50px);
+        }
+
+        section.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        section h2 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        section p {
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* Footer */
+        footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            background: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            padding: 50px 20px;
+            backdrop-filter: blur(10px);
+        }
+
+        footer .footer-column {
+            max-width: 250px;
+            margin: 10px;
+        }
+
+        footer h3 {
+            font-size: 18px;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        footer ul li {
+            margin-bottom: 10px;
+        }
+
+        footer ul li a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+        }
+
+        footer ul li a:hover {
+            color: #3b5998;
+        }
+
+        /* Wave Effect */
+        .wave {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 150px;
+            background: url('https://svgshare.com/i/uKP.svg') repeat-x;
+            animation: wave 10s linear infinite;
+        }
+
+        @keyframes wave {
+            0% { background-position-x: 0; }
+            100% { background-position-x: 1600px; }
+        }
+
+        /* Keyframes */
+        @keyframes fadeIn {
+            0% { opacity: 0; transform: translateY(20px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            header h1 {
+                font-size: 22px;
+            }
+
+            .intro h2 {
+                font-size: 40px;
+            }
+
+            section {
+                padding: 50px 20px;
+            }
+
+            footer {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+
+        body {
+            font-size: 16px; /* Adjust base font size for smaller screens */
+        }
+
+        .intro h2 {
+            font-size: 36px;
+        }
+
+        .intro p {
+            font-size: 16px;
+        }
+
+        section h2 {
+            font-size: 28px;
+        }
+
+        section p {
+            font-size: 14px;
+        }
+
+        .footer-column {
+            flex: 1 1 100%; /* Make footer columns stack on smaller screens */
+            max-width: 100%; /* Ensure they take full width */
+            margin: 20px 0; /* Adjust margin for vertical spacing */
+        }
+        footer {
+            flex-direction: column; /* Stack footer elements */
+            align-items: center; /* Center footer content */
+        }
+        header {
+            padding: 10px 20px; /* Smaller padding for header */
+            flex-direction: column; /* Stack header elements */
+            align-items: flex-start; /* Align elements to the left */
+        }
+
+        header h1 {
+            margin-bottom: 10px; /* Add margin between title and nav */
+        }
+
+        header nav {
+            display: flex;
+            flex-direction: column; /* Stack navigation links */
+            align-items: flex-start; /* Align links to the left */
+        }
+
+        header nav a {
+            margin: 5px 0; /* Adjust margin for stacked links */
+            margin-left: 0; /* Remove left margin */
+        }
+        /* Small Tablets and Large Phones */
+        @media (min-width: 768px) {
+            body {
+                font-size: 18px;
+            }
+
+            .intro h2 {
+                font-size: 48px;
+            }
+
+            .intro p {
+                font-size: 18px;
+            }
+
+            section h2 {
+                font-size: 32px;
+            }
+
+            section p {
+                font-size: 16px;
+            }
+            .footer-column {
+                flex: 1; /* Restore original flex behavior */
+                max-width: 250px;
+                margin: 20px;
+            }
+            footer {
+                flex-direction: row; /* Restore original flex behavior */
+                align-items: center; /* Restore original flex behavior */
+            }
+            header {
+                padding: 20px 50px; /* Restore original padding */
+                flex-direction: row; /* Restore original flex behavior */
+                align-items: center; /* Restore original flex behavior */
+            }
+
+            header h1 {
+                margin-bottom: 0; /* Remove bottom margin */
+            }
+
+            header nav {
+                flex-direction: row; /* Restore original flex behavior */
+                align-items: center; /* Restore original flex behavior */
+            }
+
+            header nav a {
+                margin: 0 10px; /* Restore original margin */
+                margin-left: 20px; /* Restore left margin */
+            }
+        }
+
+        /* Desktop and Larger Screens */
+        @media (min-width: 1024px) {
+            /* Styles for larger screens can go here */
+            .intro p {
+                max-width: 700px; /* Example: Adjust max-width for larger screens */
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Hippo Social</h1>
+    <nav>
+        <a href="#features">Features</a>
+        <a href="#about">About</a>
+        <a href="#contact">Contact</a>
+        <a href="login.html">Login</a>
+    </nav>
+</header>
+
+<section class="intro">
+    <h2>Welcome to Hippo Social</h2>
+    <p>Your gateway to connecting with the world. Join the conversation, share your story, and stay updated with everything that matters to you.</p>
+    <button onclick="redirectToSignUp()">Join Now</button>
+</section>
+
+<section id="features">
+    <h2>Features</h2>
+    <ul>
+        <li>
+            <p>User-Generated Content: Most content on social media is created and shared by users themselves, ranging from text posts to images and videos.</p>
+        </li>
+        <li>
+            <p>Real-Time Interaction: Social media enables instant communication and engagement, allowing users to interact through comments, messages, and live streaming.</p>
+        </li>
+        <li>
+            <p>Personalization: Platforms use algorithms to personalize content, showing users posts based on their interests, previous activity, and connections.</p>
+        </li>
+        <li>
+            <p>Marketing Power: Businesses use social media for targeted advertising, brand promotion, customer engagement, and influencer partnerships.</p>
+        </li>
+        <li>
+            <p>Privacy Concerns: Social media platforms often raise privacy issues, with users needing to manage their data sharing preferences and security settings.</p>
+        </li>
+        <li>
+            <p><a href="#">See more...</a></p>
+        </li>
+    </ul>
+</section>
+
+<section id="about">
+    <h2>About Us</h2>
+    <p>ConnectSphere is a platform designed to bring people together, enabling seamless communication and content sharing across the globe.</p>
+</section>
+
+<section id="contact">
+    <h2>Contact</h2>
+    <p>Have questions? Reach out to us at support@connectsphere.com or call us at +123-456-7890.</p>
+</section>
+
+<section id="mail-send" style="background: #2c3e50; color: #fff; padding: 50px 20px; text-align: center; margin-top: 50px;">
+    <h2>Need Help? Send Us a Message</h2>
+    <p>We’re here to assist you with any questions or concerns.</p>
+    <form style="max-width: 600px; margin: 0 auto; text-align: left;">
+        <div style="margin-bottom: 15px;">
+            <label for="email" style="font-weight: 600; display: block; margin-bottom: 5px;">Email Address</label>
+            <input type="email" id="email" placeholder="Your email address" required 
+                   style="width: 100%; padding: 10px; border: none; border-radius: 5px;">
+        </div>
+        <div style="margin-bottom: 15px;">
+            <label for="message" style="font-weight: 600; display: block; margin-bottom: 5px;">Your Message</label>
+            <textarea id="message" rows="5" placeholder="Type your message here..." required 
+                      style="width: 100%; padding: 10px; border: none; border-radius: 5px;"></textarea>
+        </div>
+        <button type="submit" 
+                style="padding: 10px 20px; background: #3b5998; color: #fff; border: none; border-radius: 5px; font-size: 16px; cursor: pointer; transition: background 0.3s;">
+            Send
+        </button>
+    </form>
+</section>
+
+<footer>
+    <div class="footer-column">
+        <h3>Help Support</h3>
+        <ul>
+            <li><a href="#">Getting Started</a></li>
+            <li><a href="#">Video Tours</a></li>
+            <li><a href="#">Tutorials</a></li>
+            <li><a href="#">Community Forum</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Features</h3>
+        <ul>
+            <li><a href="#">User Login</a></li>
+            <li><a href="#">Chat Bots</a></li>
+            <li><a href="#">Encryption</a></li>
+            <li><a href="#">Cloud Sync</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Company</h3>
+        <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Careers</a></li>
+        </ul>
+    </div>
+    <div class="footer-column">
+        <h3>Contact Us</h3>
+        <p>Email: help@connectsphere.com</p>
+        <p>Phone: +1-800-200-300</p>
+        <p>Address: 123 Green Road, Palo Alto, CA</p>
+    </div>
+</footer>
+
+<div class="wave"></div>
+
+<script>
+    function redirectToSignUp() {
+        window.location.href = 'signup.html';
+    }
+
+    // Lazy reveal on scroll
+    document.addEventListener("scroll", () => {
+        const sections = document.querySelectorAll("section");
+        sections.forEach(section => {
+            const rect = section.getBoundingClientRect();
+            if (rect.top <= window.innerHeight * 0.75) {
+                section.classList.add("visible");
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

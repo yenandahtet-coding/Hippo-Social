@@ -35,10 +35,6 @@ if(isset($_POST['signup'])){
 	}
 }
 ?>
-<<<<<<< HEAD
-=======
-
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 <form method="post" autocomplete="off">
               <?php
       if(isset($error)){

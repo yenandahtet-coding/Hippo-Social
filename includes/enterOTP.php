@@ -18,11 +18,15 @@ if (isset($_POST['btnSend'])) {
     $stmt->bindParam(':email', $email);
     $stmt->execute();
     header("Location: reset_password.php");
-    // $getFromO->redirect("Location: reset_password.php");
     exit();
   } else {
     echo "<p class='error-message'>Invalid OTP</p>";
   }
+}
+if (isset($_POST['btnResend'])) {
+  // Resend OTP logic
+  $email = $_SESSION['email'];
+  include 'sendOTP.php';
 }
 ?>
 
@@ -153,8 +157,9 @@ if (isset($_POST['btnSend'])) {
   <div class="otp-container">
     <label for="otp">Please enter the OTP to reset your password</label>
     <form autocomplete="off" method="POST">
-      <input type="text" name="otp" maxlength="6" placeholder="Enter your OTP" required>
+      <input type="text" name="otp" maxlength="6" placeholder="Enter your OTP">
       <button type="submit" name="btnSend">Submit</button>
+      <button type="submit" name="btnResend">Resend OTP</button>
     </form>
   </div>
 </body>

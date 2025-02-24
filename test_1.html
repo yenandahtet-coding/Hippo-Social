@@ -6,21 +6,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ZenChat - Best Chat Service</title>
     <style>
-        /* body {
-            font-family: 'Poppins', sans-serif;
-            margin: 0;
-            padding: 0;
-            background: linear-gradient(135deg, #283c86, #45a247);
-            color: white;
-            overflow-x: hidden;
-        } */
-
         body {
             font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-            background: linear-gradient(135deg, #283c86, #45a247);
-            color: white;
+            background: linear-gradient(135deg,  Beige, #DFCAA0);
+            color: brown;
             overflow-x: hidden;
             opacity: 0;
             animation: fadeIn 1.5s forwards;
@@ -35,13 +26,12 @@
             }
         }
         
-
         header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 20px;
-            background: rgba(0, 0, 0, 0.8);
+            background: #ffff;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
             position: fixed;
             width: 100%;
@@ -51,17 +41,6 @@
             animation: slideInDown 1s;
         }
 
-        /* @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-20px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        } */
         @keyframes slideInDown {
             from {
                 opacity: 0;
@@ -76,11 +55,11 @@
         .logo {
             font-size: 30px;
             font-weight: 700;
-            color: #ffcc00;
+            color:  brown;
         }
 
         nav a {
-            color: white;
+            color: brown;
             margin: 0 15px;
             text-decoration: none;
             font-weight: 500;
@@ -88,11 +67,11 @@
         }
 
         nav a:hover {
-            color: #ffcc00;
+            color: #8b4513;
         }
 
         .btn-primary {
-            background: linear-gradient(45deg, #ff007f, #ffcc00);
+            background: linear-gradient(45deg, #511111, #ffffce);
             color: white;
             padding: 14px 28px;
             border: none;
@@ -101,9 +80,9 @@
             font-size: 16px;
             transition: background 0.3s ease-in-out, transform 0.2s;
         }
-
+       
         .btn-primary:hover {
-            background: linear-gradient(45deg, #e6006e, #ffaa00);
+            background: linear-gradient(45deg, #e8579d, #511111);
             transform: scale(1.05);
         }
 
@@ -116,8 +95,8 @@
             position: relative;
             animation: fadeInUp 1.2s ease-in-out;
             flex-wrap: wrap;
-            /* height: 100vh; */
         }
+        
         @keyframes fadeInUp {
             from {
                 opacity: 0;
@@ -229,7 +208,7 @@
 
         .contact button {
             padding: 14px;
-            background: #ffcc00;
+            background: #511111;
             border: none;
             border-radius: 8px;
             cursor: pointer;
@@ -238,7 +217,7 @@
         }
 
         .contact button:hover {
-            background: #ffaa00;
+            background: #511111;
         }
 
         .about h2 {
@@ -309,7 +288,7 @@
         }
 
         .footer-section h4 {
-            color: #ffcc00;
+            color: #511111;
             /* Example color */
             margin-bottom: 10px;
         }
@@ -330,7 +309,7 @@
         }
 
         .footer-section a:hover {
-            color: #ffcc00;
+            color: white;
         }
 
         .footer-bottom {
@@ -377,7 +356,7 @@
             encrypted messages, making it a secure and effective solution for seamless team communication, whether your
             team is in the same room or spread across different locations.
         </p>
-        <button class="btn-secondary">Learn More</button>
+        <!-- <button class="btn-secondary">Learn More</button> -->
     </section>
 
     <section class="about" id="about">

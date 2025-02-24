@@ -8,10 +8,12 @@ if (!isset($_SESSION['is_admin']) || $_SESSION['is_admin'] !== true) {
 
 if (isset($_POST['logoutBtn'])) {
     $getFromU->logout();
+    $_SESSION['logout_count'] =+ 1;
     header('Location:' . BASE_URL . 'index1.php');
 }
 $admin_id = $_SESSION['user_id'];
 $admin = $getFromU->getAdminProfile($admin_id);
+$unreadCount = $getFromU->countUnreadReports();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -165,7 +167,15 @@ $admin = $getFromU->getAdminProfile($admin_id);
             <li><a href="#users" onclick="showSection('users')"><i class="fas fa-users"></i> Users</a></li>
             <li><a href="#managepost" onclick="showSection('managepost')"><i class="fas fa-edit"></i> Manage Posts</a></li>
             <li><a href="#managerepost" onclick="showSection('managerepost')"><i class="fas fa-retweet"></i> Manage Reposts</a></li>
-            <li><a href="#reports" onclick="showSection('reports')"><i class="fas fa-chart-line"></i> Reports</a></li>
+            <li><a href="#reports" onclick="showSection('reports')"><i class="fas fa-chart-line position-relative"></i> Reports
+                <sup style="margin-left: 10%; width: 30px; border: 1px solid #2e2e2e; justify-content: center; border-radius: 50%;">
+                <?php if ($unreadCount > 0): ?>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        <?= $unreadCount ?>
+                    </span>
+                <?php endif; ?>
+                </sup>
+            </a></li>
             <li>
                 <a href="#settings" onclick="toggleDropdown()"><i class="fas fa-cogs"></i> Settings</a>
                 <div class="dropdown">
@@ -184,17 +194,9 @@ $admin = $getFromU->getAdminProfile($admin_id);
             <img src="<?php echo $profileImagePath ?>" alt="Profile Picture">
             <div class="profile-info">
                 <span><?php
-<<<<<<< HEAD
                         echo htmlspecialchars($admin->username);
                         ?></span>
                 <span><?php
-=======
-                        // echo $admin_name;
-                        echo htmlspecialchars($admin->username);
-                        ?></span>
-                <span><?php
-                        // echo $admin_email;
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
                         echo htmlspecialchars($admin->email);
                         ?></span>
             </div>
@@ -267,50 +269,6 @@ $admin = $getFromU->getAdminProfile($admin_id);
         <?php
         include 'account_setting.php'; 
         ?>
-<<<<<<< HEAD
-=======
-        <!-- <div class="card account-card">
-            <div class="card-header">
-                <h3>Account Settings</h3>
-            </div>
-            <div class="card-body">
-                <form id="account-form" action="account_setting.php" method="POST" enctype="multipart/form-data">
-                    <div class="form-group">
-                        <label for="profile_picture">Profile Picture</label>
-                        <input type="file" id="profile_picture" name="profile_picture" accept="image/*" class="form-control">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="name">Full Name</label>
-                        <input type="text" id="name" name="name" class="form-control" value="<?php echo htmlspecialchars($admin->username); ?>" required>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" value="<?php echo htmlspecialchars($admin->email); ?>" required>
-                    </div>
-
-                    <div class="form-group password-container">
-                        <label for="password">New Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="password" name="password" class="form-control">
-                            <span class="toggle-password" onclick="togglePassword('password')">&#128065;</span>
-                        </div>
-                    </div>
-
-                    <div class="form-group password-container">
-                        <label for="confirm_password">Confirm Password</label>
-                        <div class="password-wrapper">
-                            <input type="password" id="confirm_password" name="confirm_password" class="form-control">
-                            <span class="toggle-password" onclick="togglePassword('confirm_password')">&#128065;</span>
-                        </div>
-                    </div>
-
-                    <button type="submit" class="btn btn-save" name="save-changes">Save Changes</button>
-                </form>
-            </div>
-        </div> -->
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
     </div>
 
 
@@ -348,7 +306,6 @@ $admin = $getFromU->getAdminProfile($admin_id);
                 }
             });
         }
-
 
 
     //     function togglePassword(fieldId) {

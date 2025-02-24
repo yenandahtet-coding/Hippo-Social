@@ -699,14 +699,14 @@ box-shadow: inset 0px -4px 0px #6cc854;}
 }
 .t-fo-left label{
 	font-size: 25px;
-	color: #83b476;
+	color: #5b1d1d;
 	text-decoration: none;
 }
 .t-fo-left input[type="file"]{
 	display: none;
 }
 .t-fo-left a:hover{
-	color:#64d547;
+	color:#3c1313;
 }
 .t-fo-right{
 	width:25%;
@@ -717,7 +717,7 @@ box-shadow: inset 0px -4px 0px #6cc854;}
 	padding: 5px 10px;
 	font-weight: bold;
 	color: white;
-	background: #83b476;
+	background: #501b1b;
 	border: 1px solid #aaa;
 	border-radius: 4px;
 	cursor:pointer;
@@ -727,7 +727,7 @@ box-shadow: inset 0px -4px 0px #6cc854;}
 	padding: 5px 10px;
 	font-weight: bold;
 	color: white;
-	background: #83b476;
+	background: #421919;
 	border: 1px solid #aaa;
 	border-radius: 4px;
 	cursor:pointer;

@@ -48,15 +48,38 @@ class User
 		if ($count > 0) {
 			$_SESSION['user_id'] = $user->user_id;
 
+			// Log user login activity
+			$this->logActivity($user->user_id, 'login');
 			if ($user->isAdmin == 1) {
 				$_SESSION['is_admin'] = true;
 				header('Location: includes/admin_part/admindashboard.php'); // Redirect to admin dashboard
 			} else {
 				$_SESSION['is_admin'] = false;
+				$_SESSION['loginCount'] += 1;
 				header('Location: index1.php'); // Redirect to user home page
 			}
 		} else {
 			return false;
+		}
+	}
+
+	public function logActivity($user_id, $activity_type){
+		$sql = 'INSERT INTO user_activity (user_id, activity_type) VALUES (:user_id, :activity_type)';
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':user_id', $user_id, PDO::PARAM_INT);
+		$stmt->bindParam(':activity_type', $activity_type, PDO::PARAM_STR);
+		$stmt->execute();
+	}
+
+	public function getUsagePerMonth(){
+		$sql = 'SELECT COUNT(*) AS usage_count FROM user_activity WHERE activity_type = "login" AND MONTH(activity_time) = MONTH(CURRENT_DATE()) AND YEAR(activity_time) = YEAR(CURRENT_DATE())';
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		if($result){
+			return $result->usage_count;
+		} else {
+			return 0; // Return 0 if no data found
 		}
 	}
 
@@ -107,6 +130,7 @@ class User
 
 	public function logout()
 	{
+		$_SESSION['logoutCount'] =+ 1;
 		$_SESSION = array();
 		session_destroy();
 		header('Location: ../index.php');
@@ -250,7 +274,6 @@ class User
 		}
 	}
 
-
 	public function timeAgo($datetime)
 	{
 		$time    = strtotime($datetime);
@@ -308,25 +331,18 @@ class User
 	}
 
 	//ban user form database and not access to login
-<<<<<<< HEAD
 	public function banUser($userId)
 	{
-=======
-	public function banUser($userId){
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "UPDATE users SET isBanded = 1 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
 		$stmt->execute();
 		return $stmt->rowCount();
 	}
+
 	//unban user from database and access to login
-<<<<<<< HEAD
 	public function unbanUser($userId)
 	{
-=======
-	public function unbanUser($userId){
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "UPDATE users SET isBanded = 0 WHERE user_id = :id";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->bindParam(':id', $userId, PDO::PARAM_INT);
@@ -334,12 +350,8 @@ class User
 		return $stmt->rowCount();
 	}
 
-<<<<<<< HEAD
 	public function getAdmin()
 	{
-=======
-	public function getAdmin(){
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$sql = "SELECT * FROM users WHERE isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
 		$stmt->execute();
@@ -347,7 +359,6 @@ class User
 	}
 
 	public function getAdminProfile($admin_id)
-<<<<<<< HEAD
 	{
 		$sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
@@ -358,17 +369,6 @@ class User
 
 	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath)
 	{
-=======
-{
-    $sql = "SELECT * FROM users WHERE user_id = :admin_id AND isAdmin = 1";
-    $stmt = $this->pdo->prepare($sql);
-    $stmt->bindParam(':admin_id', $admin_id, PDO::PARAM_INT);
-    $stmt->execute();
-    return $stmt->fetch(PDO::FETCH_OBJ);
-}
-
-	public function updateAdmin($admin_id, $name, $email, $Password, $profileImagePath){
->>>>>>> 81fc449ef99aedb37fa546fe30de780262737670
 		$passwordHash = md5($Password);
 		$sql = "UPDATE users SET username = :name, email = :email, password = :Password, profileImage = :profileImage WHERE user_id = :admin_id AND isAdmin = 1";
 		$stmt = $this->pdo->prepare($sql);
@@ -379,4 +379,59 @@ class User
 		$stmt->bindParam(':profileImage', $profileImagePath, PDO::PARAM_STR);
 		return $stmt->execute();
 	}
+
+	public function getIdByEmail($email){
+		$sql = "SELECT user_id FROM users WHERE email = :email";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':email', $email, PDO::PARAM_STR);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		if($result){
+			return $result->user_id;
+		} else {
+			return false;
+		}
+	}
+
+	public function putReports($userId, $name, $Surname, $Email, $Reason){
+		$sql = "INSERT INTO reports (reportedByID, reportedUsername, reportedSurname, reportedEmail, reportedReason) VALUES (:userId, :name, :Surname, :Email, :Reason)";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->bindParam(':userId', $userId, PDO::PARAM_INT);
+		$stmt->bindParam(':name', $name, PDO::PARAM_STR);
+		$stmt->bindParam(':Surname', $Surname, PDO::PARAM_STR);
+		$stmt->bindParam(':Email', $Email, PDO::PARAM_STR);
+		$stmt->bindParam(':Reason', $Reason, PDO::PARAM_STR);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_OBJ);
+		if($result){
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function showToAdmin(){
+		$sql = "SELECT reportedByID, reportedUsername, reportedSurname, reportedEmail, reportedReason FROM reports";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+		return $result;
+	}
+
+	public function countUnreadReports() {
+		$sql = "SELECT COUNT(*) AS unreadCount FROM reports WHERE isRead = 0";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+		$result = $stmt->fetch(PDO::FETCH_ASSOC);
+		return $result['unreadCount'];
+	}
+	
+	public function markReportsAsRead() {
+		$sql = "UPDATE reports SET isRead = 1 WHERE isRead = 0";
+		$stmt = $this->pdo->prepare($sql);
+		$stmt->execute();
+	}
+	
+
+
 }

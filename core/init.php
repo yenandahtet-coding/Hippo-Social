@@ -1,5 +1,8 @@
 <?php 
 	session_start();
+	// if(session_start() == PHP_SESSION_NONE){
+	// 	session_start();
+	// }
 	include 'database/connection.php';
 	include 'classes/user.php';
 	include 'classes/tweet.php';
@@ -16,5 +19,12 @@
   
   	// define('BASE_URL', 'http://localhost/twitter/');
 	define('BASE_URL', 'http://localhost/twitter/');
+
+	if (!isset($_SESSION['loginCount'])) {
+        $_SESSION['loginCount'] = 0;
+    }
+    if (!isset($_SESSION['logoutCount'])) {
+        $_SESSION['logoutCount'] = 0;
+    }
  ?>                                                   
  

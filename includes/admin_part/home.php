@@ -1,11 +1,11 @@
 <?php
 require_once '../../core/init.php';
-    // get count of user form db
-    // require_once '../../core/init.php';
     $userQty = $getFromU->countUser()->total;
     $postQty = $getFromT->countPosts();
     $repostQty = $getFromT->countReposts();
-
+    $loginCount = $_SESSION['loginCount'];
+    $logoutCount = $_SESSION['logoutCount'];
+    $usagePerMonth = $getFromU->getUsagePerMonth();
 ?>
 
 <div class="card">
@@ -35,15 +35,21 @@ require_once '../../core/init.php';
             </div>
             <div class="stat-card">
                 <h3>Logged In Users</h3>
-                <p id="logged-in-users">Loading...</p>
+                <p id="logged-in-users"><?php 
+                    echo $loginCount;
+                ?></p>
             </div>
             <div class="stat-card">
                 <h3>Logged Out Users</h3>
-                <p id="logged-out-users">Loading...</p>
+                <p id="logged-out-users"><?php
+                    echo $logoutCount;
+                ?></p>
             </div>
             <div class="stat-card">
                 <h3>Useage per Month</h3>
-                <p id="useage-per-month">Loading...</p>
+                <p id="useage-per-month"><?php 
+                    echo $usagePerMonth . " %";
+                ?></p>
             </div>
         </div>
     </div>

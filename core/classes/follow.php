@@ -146,7 +146,7 @@
 						</div>
 						<div class="follow-person-bio ml-5 mb-3">
 							<div class="follow-person-dis ml-4">
-								'.Tweet::getTweetLinks($following->bio).'
+								' . Tweet::getTweetLinks($following->bio) . '
 							</div>
 						</div>
 					</div>
@@ -167,7 +167,7 @@
 				    </div>
 					<div class="media-inner">
 						<div class="fo-co-head media-body">
-							<a href="'.BASE_URL.$user->username.'">'.$user->screenName.'</a><br><span>@'.$user->username.'</span>
+							<a href="'.BASE_URL.'userprofile.php?username='.$user->username.'">'.$user->screenName.'</a><br><span>@'.$user->username.'</span>
 						</div>
 						<!-- FOLLOW BUTTON -->
 						'.$this->followBtn($user->user_id, $user_id, $profileID).'

@@ -132,7 +132,7 @@
 		 		</ul>
 		 	</div>
 		 	<div class="t-fo-right">
- 		 		<input type="submit" id="postComment" value="Tweet">
+ 		 		<input type="submit" id="postComment" value="Ment">
  		 		<script type="text/javascript" src="<?php echo BASE_URL;?>assets/js/comment.js"></script>
  		 		<script type="text/javascript" src="<?php echo BASE_URL;?>assets/js/follow.js"></script>
   		 	</div>

@@ -24,20 +24,7 @@ if ($getFromU->loggedIn() === true) {
     <script src="<?php echo BASE_URL; ?>assets/js/popper.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/bootstrap.min.js"></script>
     <script src="<?php echo BASE_URL; ?>assets/js/jquery-3.1.1.min.js"></script>
-    <!-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> -->
 
-    <!-- <style>
-        .preloader {
-            position: fixed;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.9);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            z-index: 9999;
-        }
-    </style> -->
 </head>
 
 <body>
@@ -76,7 +63,7 @@ if ($getFromU->loggedIn() === true) {
                 <div class="row">
                     <div class="left col-md-6 col-12">
                         <div class="items-wrapper">
-                            <div class="item">
+                            <!-- <div class="item">
                                 <span class="fa fa-search"></span>
                                 <h3>Hi welcome from our app</h3>
                             </div>
@@ -87,10 +74,15 @@ if ($getFromU->loggedIn() === true) {
                             <div class="item">
                                 <span class="fa fa-comment-o"></span>
                                 <h3>Join the conversation.</h3>
+                            </div> -->
+                            <div class="videobackground">
+                                <video autoplay muted loop>
+                                    <source src="./assets/images/backgroundvideo.mp4" type="video/mp4">
+                                </video>
                             </div>
                         </div>
                     </div>
-                    <div class="right col-md-6 col-12">
+                    <div class="right col-md-6 col-12" style="background-color: bisque;">
                     <div class="top">
                         <?php include 'includes/login.php'; ?>
                     </div>
@@ -99,9 +91,7 @@ if ($getFromU->loggedIn() === true) {
                             <h1>See what's happening in<br />the world right now</h1>
                             <span>Join Our website today.</span>
                         </div>
-
                         <?php include 'includes/signup-form.php'; ?>
-
                     </div>
                 </div>
             </div>
